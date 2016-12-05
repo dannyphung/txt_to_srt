@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Adobe Encore TXT sub to SRT</title>
+    <style type="text/css" media="screen">
+
+    </style>
+    <script type="text/javascript" charset="utf-8">
+    function convert(x) {
+        first = x.split(':');
+        mili = first.pop();
+        return first.join(':') + ',' + mili * 40
+    }
+
+    function download() {
+        z = document.getElementById('source').value;
+        lines = z.split('\n');
+        csv = lines.map(function(a) {
+            x = a.split('	');
+            if (x.length < 3) return null
+            x[0] = convert(x[0]);
+            x[1] = convert(x[1]);
+            return x;
+        });
+
+        srt = '';
+
+        for (i in csv) {
+            if (csv[i] != null) {
+                current_line = csv[i];
+                srt += (parseInt(i) + 1) + '\n';
+                srt += current_line[0] + ' --> ' + current_line[1] + '\n';
+                srt += current_line[2] + '\n';
+                srt += '\n';
+            }
+        }
+        durl = 'data:text/plain;,' + encodeURI(srt);
+        document.getElementById('download').href = durl;
+         document.getElementById('download').click();
+    }
+
+
+    //
+    </script>
+</head>
+
+<body>
+    <h3>Adobe Encore TXT sub to SRT</h3>
+    <textarea rows="5" cols="50" name="source" id='source'></textarea>
+    <button onclick="download()">
+        Convert!
+    </button>
+    <a id="download" download='subtitle.srt' target="_blank">&nbsp</a>
+</body>
+
+</html>
