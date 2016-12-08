@@ -29,20 +29,30 @@
     function download() {
         z = document.getElementById('source').value;
         lines = z.split('\n');
-        csv = lines.map(function(a) {
+        csv = []
+        for(var i in lines){
+            a=lines[i];
             x = a.split('	');
-            if (x.length < 3) return null
-            x[0] = convert(x[0]);
-            x[1] = convert(x[1]);
-            return x;
-        });
+            if (x.length == 3){
+                x[0] = convert(x[0]);
+                x[1] = convert(x[1]);
+                csv.push(x);
+            }else if(x.length ==1 && x[0].length){
+                recent=csv.pop();
+                console.log(i);
+                if(recent){
+                    recent[2]+='\n'+x[0];
+                    csv.push(recent);
+                }
+            }
+        };
 
         srt = '';
 
-        for (i in csv) {
-            if (csv[i] != null) {
-                current_line = csv[i];
-                srt += (parseInt(i) + 1) + '\n';
+        for (var j in csv) {
+            if (csv[j] != null) {
+                current_line = csv[j];
+                srt += (parseInt(j) + 1) + '\n';
                 srt += current_line[0] + ' --> ' + current_line[1] + '\n';
                 srt += current_line[2] + '\n';
                 srt += '\n';
@@ -50,7 +60,7 @@
         }
         durl = 'data:text/plain;,' + encodeURI(srt);
         document.getElementById('download').href = durl;
-         document.getElementById('download').click();
+        document.getElementById('download').click();
     }
 
 
@@ -59,7 +69,7 @@
 </head>
 
 <body>
-    <a href="https://github.com/you"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+    <a href="https://github.com/dannyphung/txt_to_srt"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
     <div class='wrapper'>
     <h3 >Adobe Encore TXT sub to SRT</h3>
     <p>Open TXT sub with a text editor, copy and paste all content into following textarea and press <em>Convert</em></p>  
