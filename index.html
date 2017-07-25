@@ -38,9 +38,11 @@ function convert_file(content){
 function convert_time(t){
   var x = t.split(':');
   var ms = parseInt(x[3]) * 30;
+  if(ms <100)
+  ms = "0"+parseInt(ms)
   x.splice(3);
   var left = x.join(':');
-  return [left,parseInt(ms)].join(',')
+  return [left,ms].join(',')
 }
 function convert_row(row){
   var r = row.split(' ');
