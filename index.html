@@ -20,7 +20,7 @@
         }
     </style>
     <script type="text/javascript" charset="utf-8">
-        
+        var framerate;
 function convert_file(content){
   content_arr= content.split('\n');
   result = '\n'
@@ -37,7 +37,7 @@ function convert_file(content){
 }
 function convert_time(t){
   var x = t.split(':');
-  var ms = parseInt(x[3]) * 30;
+  var ms = parseInt(x[3]) * framerate;
   if(ms <100)
   ms = "0"+parseInt(ms)
   x.splice(3);
@@ -57,6 +57,7 @@ function convert_row(row){
 //     }
 
     function download() {
+        framerate = 1000 / document.getElementById('fps').value
         content = document.getElementById('source').value;
         srt= convert_file(content);
         durl = 'data:text/plain;,' + encodeURI(srt);
@@ -75,6 +76,9 @@ function convert_row(row){
     <h3 >Adobe Encore TXT sub to SRT</h3>
     <p>Open TXT sub with a text editor, copy and paste all content into following textarea and press <em>Convert</em></p>  
     <textarea rows="5" cols="50" name="source" id='source'></textarea>
+    <label>Video FPS
+        <input id='fps' type="number" value="24">
+    </label>
     <button onclick="download()">
         Convert!
     </button>
