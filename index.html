@@ -37,7 +37,7 @@ function convert_file(content){
 }
 function convert_time(t){
   var x = t.split(':');
-  var ms = (parseInt(x[3])* 1000)/60;
+  var ms = parseInt(x[3]) * 30;
   x.splice(3);
   var left = x.join(':');
   return [left,parseInt(ms)].join(',')
