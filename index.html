@@ -55,7 +55,7 @@ function convert_row(row){
 //     }
 
     function download() {
-        z = document.getElementById('source').value;
+        content = document.getElementById('source').value;
         srt= convert_file(content);
         durl = 'data:text/plain;,' + encodeURI(srt);
         document.getElementById('download').href = durl;
