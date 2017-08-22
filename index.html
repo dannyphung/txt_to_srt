@@ -45,7 +45,7 @@ function convert_time(t){
   return [left,ms].join(',')
 }
 function convert_row(row){
-  var r = row.split(' ');
+  var r = row.split(/ |\t/);
   r[0] = convert_time(r[0]); 
   r[1] = convert_time(r[1]);
   return r
